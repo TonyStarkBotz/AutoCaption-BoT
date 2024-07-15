@@ -8,6 +8,8 @@ try: bot_token = os.environ.get("bot_token", None)
 except Exception as bot_token: print(f"⚠️ Bot Token Invalid {bot_token}")
 try: custom_caption = os.environ.get("custom_caption", "`{file_name}`")
 except Exception as custom_caption: print(f"⚠️ Custom Caption Invalid {custom_caption}")
+port = int(os.environ.get("PORT", 8080))
+app.run(host="0.0.0.0", port=port)
 
 AutoCaptionBot = pyrogram.Client(
    name="AutoCaptionBot", api_id=app_id, api_hash=api_hash, bot_token=bot_token)
@@ -88,6 +90,8 @@ def about_buttons(bot, update):
    pyrogram.types.InlineKeyboardButton("🏠 Back To Home 🏠", callback_data="start")
    ]]
   return pyrogram.types.InlineKeyboardMarkup(buttons)
+    if __name__ == "__main__":
+        app.run(host="0.0.0.0", port=8080)
 
 print("Telegram AutoCaption V1 Bot Start")
 print("Bot Created By https://github.com/PR0FESS0R-99")
