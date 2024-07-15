@@ -1,17 +1,16 @@
 import os
 import asyncio
 import pyrogram
-from flask import Flask
 
-app = Flask(__name__)
-
+# Ensure all necessary environment variables are set
 app_id = int(os.environ.get("app_id"))
 api_hash = os.environ.get("api_hash")
 bot_token = os.environ.get("bot_token")
 custom_caption = os.environ.get("custom_caption", "`{file_name}`")
 
 AutoCaptionBot = pyrogram.Client(
-   name="AutoCaptionBot", api_id=app_id, api_hash=api_hash, bot_token=bot_token)
+    name="AutoCaptionBot", api_id=app_id, api_hash=api_hash, bot_token=bot_token
+)
 
 start_message = """
 <b>👋Hello {}</b>
@@ -94,7 +93,6 @@ def about_buttons(bot, update):
     return pyrogram.types.InlineKeyboardMarkup(buttons)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
     AutoCaptionBot.run()
 
 print("Telegram AutoCaption V1 Bot Start")
