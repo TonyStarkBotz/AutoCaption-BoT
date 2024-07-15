@@ -1,13 +1,16 @@
 import os
 import asyncio
 import pyrogram
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import threading
 
-# Ensure all necessary environment variables are set
+# Environment variables
 app_id = int(os.environ.get("app_id"))
 api_hash = os.environ.get("api_hash")
-bot_token = os.environ.get("bot_token")
+bot_token = os.environ.get("bot_token"))
 custom_caption = os.environ.get("custom_caption", "`{file_name}`")
 
+# Pyrogram Client
 AutoCaptionBot = pyrogram.Client(
     name="AutoCaptionBot", api_id=app_id, api_hash=api_hash, bot_token=bot_token
 )
@@ -92,7 +95,24 @@ def about_buttons(bot, update):
     ]]
     return pyrogram.types.InlineKeyboardMarkup(buttons)
 
+# Dummy web server
+class DummyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(b"AutoCaptionBot is running!")
+
+def run_dummy_server():
+    port = int(os.environ.get("PORT", 8080))
+    server_address = ('', port)
+    httpd = HTTPServer(server_address, DummyServer)
+    httpd.serve_forever()
+
 if __name__ == "__main__":
+    # Start dummy server in a new thread
+    threading.Thread(target=run_dummy_server).start()
+    # Run the bot
     AutoCaptionBot.run()
 
 print("Telegram AutoCaption V1 Bot Start")
