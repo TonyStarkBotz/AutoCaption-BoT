@@ -7,7 +7,7 @@ import threading
 # Environment variables
 app_id = int(os.environ.get("app_id"))
 api_hash = os.environ.get("api_hash")
-bot_token = os.environ.get("bot_token"))
+bot_token = os.environ.get("bot_token")
 custom_caption = os.environ.get("custom_caption", "`{file_name}`")
 
 # Pyrogram Client
